@@ -1,10 +1,7 @@
 package com.khandelwal.domainmodel.asset;
 
-import com.querydsl.core.annotations.QueryInit;
-
 public class AssetAddress {
 
-	@QueryInit(value = "asset.assetAddress.physicalAddress")
 	private String[] physicalAddress;
 
 	private String websiteURL;
