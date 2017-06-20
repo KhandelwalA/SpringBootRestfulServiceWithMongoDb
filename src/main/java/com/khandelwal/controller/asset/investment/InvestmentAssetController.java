@@ -29,7 +29,8 @@ public class InvestmentAssetController {
 	private InvestmentAssetService investmentAssetService;
 
 	@Autowired
-	public InvestmentAssetController(InvestmentAssetService investmentAssetService) {
+	public InvestmentAssetController(
+			InvestmentAssetService investmentAssetService) {
 		super();
 		this.investmentAssetService = investmentAssetService;
 	}
@@ -43,34 +44,61 @@ public class InvestmentAssetController {
 	@GetMapping(value = "/getAllInvestmentAsset")
 	public ResponseEntity<Collection<InvestmentAsset>> getAllInvestmentAsset() {
 
-		return new ResponseEntity<Collection<InvestmentAsset>>(investmentAssetService.getAllInvestmentAsset(),
-				HttpStatus.OK);
+		return new ResponseEntity<Collection<InvestmentAsset>>(
+				investmentAssetService.getAllInvestmentAsset(), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/getInvestmentAssetByNumber/{assetnumber}")
-	public ResponseEntity<InvestmentAsset> getInvestmentAssetByNumber(@PathVariable String assetnumber) {
+	public ResponseEntity<InvestmentAsset> getInvestmentAssetByNumber(
+			@PathVariable String assetnumber) {
 
-		return new ResponseEntity<InvestmentAsset>(investmentAssetService.getInvestmentAssetByNumber(assetnumber),
+		return new ResponseEntity<InvestmentAsset>(
+				investmentAssetService.getInvestmentAssetByNumber(assetnumber),
 				HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/getInvestmentAssetByName/{assetName}")
-	public ResponseEntity<Collection<InvestmentAsset>> getInvestmentAssetByName(@PathVariable String assetName) {
+	public ResponseEntity<Collection<InvestmentAsset>> getInvestmentAssetByName(
+			@PathVariable String assetName) {
 
 		return new ResponseEntity<Collection<InvestmentAsset>>(
-				investmentAssetService.getInvestmentAssetByName(assetName), HttpStatus.OK);
+				investmentAssetService.getInvestmentAssetByName(assetName),
+				HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/getInvestmentAssetByType/{assetType}")
-	public ResponseEntity<Collection<InvestmentAsset>> getInvestmentAssetByType(@PathVariable String assetType) {
+	public ResponseEntity<Collection<InvestmentAsset>> getInvestmentAssetByType(
+			@PathVariable String assetType) {
 
 		return new ResponseEntity<Collection<InvestmentAsset>>(
-				investmentAssetService.getInvestmentAssetByType(assetType), HttpStatus.OK);
+				investmentAssetService.getInvestmentAssetByType(assetType),
+				HttpStatus.OK);
 	}
 
-	@DeleteMapping(value = "/deleteInvestmentAssetById/{assetNumber}")
+	@DeleteMapping(value = "/deleteInvestmentAssetByNumber/{assetNumber}")
 	public void deleteInvestmentAssetByName(@PathVariable String assetNumber) {
 
 		investmentAssetService.deleteInvestmentAsset(assetNumber);
+	}
+
+	@PostMapping(value = "/getInvestmentAssetByNameAndtype")
+	public ResponseEntity<Collection<InvestmentAsset>> getInvestmentAssetByNameAndType(
+			@RequestBody InvestmentAsset investmentAsset) {
+
+		return new ResponseEntity<Collection<InvestmentAsset>>(
+				(investmentAssetService.getInvestmentAssetByNameAndType(
+						investmentAsset.getAssetName(),
+						investmentAsset.getAssetType())), HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/getAssetByNumberOrIfscCodeOrSortCodeOrNameAndType/{assetNumber}/{ifscCode}/{sortCode}/{assetName}/{assetType}")
+	public ResponseEntity<Collection<InvestmentAsset>> deleteAssetByNumberOrIfscCodeOrSortCodeOrNameAndType(
+			@PathVariable String assetNumber, @PathVariable String ifscCode,
+			@PathVariable String sortCode, @PathVariable String assetName,
+			@PathVariable String assetType) {
+
+		return new ResponseEntity<Collection<InvestmentAsset>> (investmentAssetService
+				.getAssetByNumberOrIfscCodeOrSortCodeOrNameAndType(
+						assetNumber, ifscCode, sortCode, assetName, assetType),HttpStatus.OK);
 	}
 }

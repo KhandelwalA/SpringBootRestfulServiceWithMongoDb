@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.khandelwal.domainmodel.asset.investment.InvestmentAsset;
+import com.khandelwal.domainmodel.asset.investment.QInvestmentAsset;
+import com.querydsl.core.types.dsl.BooleanExpression;
 
 @Service
 public class InvestmentAssetService {
@@ -14,8 +17,7 @@ public class InvestmentAssetService {
 	private InvestmentAssetRepository investmentAssetRepository;
 
 	@Autowired
-	public InvestmentAssetService(
-			InvestmentAssetRepository investmentAssetRepository) {
+	public InvestmentAssetService(InvestmentAssetRepository investmentAssetRepository) {
 		super();
 		this.investmentAssetRepository = investmentAssetRepository;
 	}
@@ -39,8 +41,7 @@ public class InvestmentAssetService {
 
 		Collection<InvestmentAsset> InvestmentAssetCollection = new ArrayList<InvestmentAsset>();
 
-		for (InvestmentAsset InvestmentAsset : investmentAssetRepository
-				.findAll()) {
+		for (InvestmentAsset InvestmentAsset : investmentAssetRepository.findAll()) {
 			InvestmentAssetCollection.add(InvestmentAsset);
 		}
 
@@ -90,4 +91,47 @@ public class InvestmentAssetService {
 		investmentAssetRepository.delete(assetNumber);
 
 	}
+
+	/**
+	 * This method find the InvestmentAsset record matched by asset name & type
+	 * 
+	 * @param assetName
+	 * @param assetType
+	 * @return
+	 */
+	public Collection<InvestmentAsset> getInvestmentAssetByNameAndType(String assetName, String assetType) {
+
+		return investmentAssetRepository.findByAssetNameAndType(assetName, assetType);
+
+	}
+
+	/**
+	 * This method uses 'querydsl-mongodb' jar for complex queries
+	 * 
+	 * @param assetName
+	 * @param assetType
+	 * @param ifscCode
+	 * @return
+	 */
+	public Collection<InvestmentAsset> getAssetByNumberOrIfscCodeOrSortCodeOrNameAndType(String assetNumber,
+			String ifscCode, String sortCode, String assetName, String assetType) {
+
+		Collection<InvestmentAsset> investmentAssetCollection = new ArrayList<>();
+		QInvestmentAsset investmentAsset = new QInvestmentAsset("investmentAsset");
+
+		/* Creating filter expressions */
+		BooleanExpression filterByAssetNumber = investmentAsset.assetNumber.equalsIgnoreCase(assetNumber);
+		BooleanExpression filterByAssetIfscCode = investmentAsset.ifscCode.equalsIgnoreCase(ifscCode);
+		BooleanExpression filterByAssetSortCode = investmentAsset.sortCode.equalsIgnoreCase(sortCode);
+		BooleanExpression filterByName = investmentAsset.assetName.equalsIgnoreCase(assetName);
+		BooleanExpression filterByType = investmentAsset.assetType.equalsIgnoreCase(assetType);
+
+		for (InvestmentAsset investment : investmentAssetRepository.findAll(filterByAssetNumber
+				.or(filterByAssetIfscCode).or(filterByAssetSortCode).or(filterByName.and(filterByType)))) {
+			investmentAssetCollection.add(investment);
+		}
+
+		return investmentAssetCollection;
+	}
+
 }

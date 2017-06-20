@@ -43,33 +43,58 @@ public class UtilityAssetController {
 	@GetMapping(value = "/getAllUtilityAsset")
 	public ResponseEntity<Collection<UtilityAsset>> getAllUtilityAsset() {
 
-		return new ResponseEntity<Collection<UtilityAsset>>(utilityAssetService.getAllUtilityAsset(), HttpStatus.OK);
+		return new ResponseEntity<Collection<UtilityAsset>>(
+				utilityAssetService.getAllUtilityAsset(), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/getUtilityAssetByNumber/{assetnumber}")
-	public ResponseEntity<UtilityAsset> getUtilityAssetByNumber(@PathVariable String assetnumber) {
+	public ResponseEntity<UtilityAsset> getUtilityAssetByNumber(
+			@PathVariable String assetnumber) {
 
-		return new ResponseEntity<UtilityAsset>(utilityAssetService.getUtilityAssetByNumber(assetnumber),
+		return new ResponseEntity<UtilityAsset>(
+				utilityAssetService.getUtilityAssetByNumber(assetnumber),
 				HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/getUtilityAssetByName/{assetName}")
-	public ResponseEntity<Collection<UtilityAsset>> getUtilityAssetByName(@PathVariable String assetName) {
+	public ResponseEntity<Collection<UtilityAsset>> getUtilityAssetByName(
+			@PathVariable String assetName) {
 
-		return new ResponseEntity<Collection<UtilityAsset>>(utilityAssetService.getUtilityAssetByName(assetName),
+		return new ResponseEntity<Collection<UtilityAsset>>(
+				utilityAssetService.getUtilityAssetByName(assetName),
 				HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/getUtilityAssetByType/{assetType}")
-	public ResponseEntity<Collection<UtilityAsset>> getUtilityAssetByType(@PathVariable String assetType) {
+	public ResponseEntity<Collection<UtilityAsset>> getUtilityAssetByType(
+			@PathVariable String assetType) {
 
-		return new ResponseEntity<Collection<UtilityAsset>>(utilityAssetService.getUtilityAssetByType(assetType),
+		return new ResponseEntity<Collection<UtilityAsset>>(
+				utilityAssetService.getUtilityAssetByType(assetType),
 				HttpStatus.OK);
 	}
 
-	@DeleteMapping(value = "/deleteUtilityAssetById/{assetNumber}")
+	@DeleteMapping(value = "/deleteUtilityAssetByNumber/{assetNumber}")
 	public void deleteUtilityAssetByName(@PathVariable String assetNumber) {
 
 		utilityAssetService.deleteUtilityAsset(assetNumber);
+	}
+
+	@GetMapping(value = "/getUtilityAssetByNameAndtype")
+	public ResponseEntity<Collection<UtilityAsset>> getUtilityAssetByNameAndType(
+			@RequestBody UtilityAsset utilityAsset) {
+
+		return new ResponseEntity<Collection<UtilityAsset>>(
+				(utilityAssetService.getUtilityAssetByNameAndType(
+						utilityAsset.getAssetName(),
+						utilityAsset.getAssetType())), HttpStatus.OK);
+	}
+
+	@DeleteMapping(value = "/deleteByAssetNumberOrMeterNumber/{assetNumber}/{meterNumber}")
+	public void deleteByAssetNumberOrMeterNumber(
+			@PathVariable String assetNumber, @PathVariable String meterNumber) {
+
+		utilityAssetService.deleteByAssetNumberOrMeterNumber(assetNumber,
+				meterNumber);
 	}
 }

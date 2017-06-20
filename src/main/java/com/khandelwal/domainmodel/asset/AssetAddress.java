@@ -1,10 +1,10 @@
 package com.khandelwal.domainmodel.asset;
 
-import java.io.Serializable;
+import com.querydsl.core.annotations.QueryInit;
 
-@SuppressWarnings("serial")
-public class AssetAddress implements Serializable {
+public class AssetAddress {
 
+	@QueryInit(value = "asset.assetAddress.physicalAddress")
 	private String[] physicalAddress;
 
 	private String websiteURL;

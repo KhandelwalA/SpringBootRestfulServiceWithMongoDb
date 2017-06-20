@@ -60,7 +60,7 @@ public class PersonalAssetController {
 				HttpStatus.OK);
 	}
 
-	@DeleteMapping(value = "/deletePersonalAssetById/{assetNumber}")
+	@DeleteMapping(value = "/deletePersonalAssetByNumber/{assetNumber}")
 	public void deletePersonalAssetByName(@PathVariable String assetNumber) {
 
 		personalAssetService.deletePersonalAsset(assetNumber);

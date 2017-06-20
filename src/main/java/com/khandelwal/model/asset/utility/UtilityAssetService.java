@@ -6,7 +6,9 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.khandelwal.domainmodel.asset.utility.QUtilityAsset;
 import com.khandelwal.domainmodel.asset.utility.UtilityAsset;
+import com.querydsl.core.types.dsl.BooleanExpression;
 
 @Service
 public class UtilityAssetService {
@@ -87,5 +89,43 @@ public class UtilityAssetService {
 
 		utilityAssetRepository.delete(assetNumber);
 
+	}
+
+	/**
+	 * This method find the InvestmentAsset record matched by asset name & type
+	 * 
+	 * @param assetName
+	 * @param assetType
+	 * @return
+	 */
+	public Collection<UtilityAsset> getUtilityAssetByNameAndType(
+			String assetName, String assetType) {
+
+		return utilityAssetRepository.findByAssetNameAndType(assetName,
+				assetType);
+
+	}
+
+	/**
+	 * This method uses 'querydsl-mongodb' jar for complex queries
+	 * 
+	 * @param assetNumber
+	 * @param meterNumber
+	 */
+	@SuppressWarnings("unchecked")
+	public void deleteByAssetNumberOrMeterNumber(String assetNumber,
+			String meterNumber) {
+
+		QUtilityAsset utilityAsset = new QUtilityAsset("utilityAsset");
+
+		/* Creating filter expressions */
+		BooleanExpression filterByAssetNumber = utilityAsset.assetNumber
+				.equalsIgnoreCase(assetNumber);
+		BooleanExpression filterByMeterNumber = utilityAsset.meterNumber
+				.equalsIgnoreCase(meterNumber);
+
+		utilityAssetRepository
+				.delete((Iterable<? extends UtilityAsset>) filterByAssetNumber
+						.or(filterByMeterNumber));
 	}
 }
