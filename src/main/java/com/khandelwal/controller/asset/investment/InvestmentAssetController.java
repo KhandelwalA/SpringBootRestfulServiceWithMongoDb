@@ -35,12 +35,22 @@ public class InvestmentAssetController {
 		this.investmentAssetService = investmentAssetService;
 	}
 
+	/**
+	 * This endpoint method is done using MongoDbRepository interface
+	 * 
+	 * @param investmentAsset
+	 */
 	@PostMapping(value = "/addInvestmentAsset")
 	public void addInvestmentAsset(@RequestBody InvestmentAsset investmentAsset) {
 
 		investmentAssetService.addInvestmentAsset(investmentAsset);
 	}
 
+	/**
+	 * This endpoint method is done using MongoDbRepository interface
+	 * 
+	 * @return
+	 */
 	@GetMapping(value = "/getAllInvestmentAsset")
 	public ResponseEntity<Collection<InvestmentAsset>> getAllInvestmentAsset() {
 
@@ -48,6 +58,12 @@ public class InvestmentAssetController {
 				investmentAssetService.getAllInvestmentAsset(), HttpStatus.OK);
 	}
 
+	/**
+	 * This endpoint method is done using MongoDbRepository interface
+	 * 
+	 * @param assetnumber
+	 * @return
+	 */
 	@GetMapping(value = "/getInvestmentAssetByNumber/{assetnumber}")
 	public ResponseEntity<InvestmentAsset> getInvestmentAssetByNumber(
 			@PathVariable String assetnumber) {
@@ -57,6 +73,12 @@ public class InvestmentAssetController {
 				HttpStatus.OK);
 	}
 
+	/**
+	 * This endpoint method is done using MongoDbRepository interface
+	 * 
+	 * @param assetName
+	 * @return
+	 */
 	@GetMapping(value = "/getInvestmentAssetByName/{assetName}")
 	public ResponseEntity<Collection<InvestmentAsset>> getInvestmentAssetByName(
 			@PathVariable String assetName) {
@@ -66,6 +88,12 @@ public class InvestmentAssetController {
 				HttpStatus.OK);
 	}
 
+	/**
+	 * This endpoint method is done using MongoDbRepository interface
+	 * 
+	 * @param assetType
+	 * @return
+	 */
 	@GetMapping(value = "/getInvestmentAssetByType/{assetType}")
 	public ResponseEntity<Collection<InvestmentAsset>> getInvestmentAssetByType(
 			@PathVariable String assetType) {
@@ -75,12 +103,23 @@ public class InvestmentAssetController {
 				HttpStatus.OK);
 	}
 
+	/**
+	 * This endpoint method is done using MongoDbRepository interface
+	 * 
+	 * @param assetNumber
+	 */
 	@DeleteMapping(value = "/deleteInvestmentAssetByNumber/{assetNumber}")
 	public void deleteInvestmentAssetByName(@PathVariable String assetNumber) {
 
 		investmentAssetService.deleteInvestmentAsset(assetNumber);
 	}
 
+	/**
+	 * This endpoint method is done using Queryds-1 jar
+	 * 
+	 * @param investmentAsset
+	 * @return
+	 */
 	@PostMapping(value = "/getInvestmentAssetByNameAndtype")
 	public ResponseEntity<Collection<InvestmentAsset>> getInvestmentAssetByNameAndType(
 			@RequestBody InvestmentAsset investmentAsset) {
@@ -91,14 +130,45 @@ public class InvestmentAssetController {
 						investmentAsset.getAssetType())), HttpStatus.OK);
 	}
 
+	/**
+	 * This endpoint method is done using @Query
+	 * 
+	 * @param assetNumber
+	 * @param ifscCode
+	 * @param sortCode
+	 * @param assetName
+	 * @param assetType
+	 * @return
+	 */
 	@GetMapping(value = "/getAssetByNumberOrIfscCodeOrSortCodeOrNameAndType/{assetNumber}/{ifscCode}/{sortCode}/{assetName}/{assetType}")
-	public ResponseEntity<Collection<InvestmentAsset>> deleteAssetByNumberOrIfscCodeOrSortCodeOrNameAndType(
+	public ResponseEntity<Collection<InvestmentAsset>> getAssetByNumberOrIfscCodeOrSortCodeOrNameAndType(
 			@PathVariable String assetNumber, @PathVariable String ifscCode,
 			@PathVariable String sortCode, @PathVariable String assetName,
 			@PathVariable String assetType) {
 
-		return new ResponseEntity<Collection<InvestmentAsset>> (investmentAssetService
-				.getAssetByNumberOrIfscCodeOrSortCodeOrNameAndType(
-						assetNumber, ifscCode, sortCode, assetName, assetType),HttpStatus.OK);
+		return new ResponseEntity<Collection<InvestmentAsset>>(
+				investmentAssetService.getAssetByNumberOrIfscCodeOrSortCodeOrNameAndType(
+						assetNumber, ifscCode, sortCode, assetName, assetType),
+				HttpStatus.OK);
+	}
+
+	/**
+	 * This endpoint method is done using MongoTemplate
+	 * 
+	 * @param assetNumber
+	 * @param ifscCode
+	 * @param sortCode
+	 * @param assetName
+	 * @param assetType
+	 */
+	@DeleteMapping(value = "/deleteAssetByNumberOrIfscCodeOrSortCodeOrNameAndType/{assetNumber}/{ifscCode}/{sortCode}/{assetName}/{assetType}")
+	public void deleteAssetByNumberOrIfscCodeOrSortCodeOrNameAndType(
+			@PathVariable String assetNumber, @PathVariable String ifscCode,
+			@PathVariable String sortCode, @PathVariable String assetName,
+			@PathVariable String assetType) {
+
+		investmentAssetService
+				.deleteAssetByNumberOrIfscCodeOrSortCodeOrNameAndType(
+						assetNumber, ifscCode, sortCode, assetName, assetType);
 	}
 }

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.khandelwal.domainmodel.asset.investment.InvestmentAsset;
@@ -15,9 +17,10 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 public class InvestmentAssetService {
 
 	private InvestmentAssetRepository investmentAssetRepository;
+	private MongoTemplate mongoTemplate;
 
 	@Autowired
-	public InvestmentAssetService(InvestmentAssetRepository investmentAssetRepository) {
+	public InvestmentAssetService(InvestmentAssetRepository investmentAssetRepository, MongoTemplate mongoTemplate) {
 		super();
 		this.investmentAssetRepository = investmentAssetRepository;
 	}
@@ -132,6 +135,34 @@ public class InvestmentAssetService {
 		}
 
 		return investmentAssetCollection;
+	}
+	
+	/**
+	 * This method uses MongoTemplate for CRUD on MongoDb
+	 * 
+	 * @param assetNumber
+	 * @param ifscCode
+	 * @param sortCode
+	 * @param assetName
+	 * @param assetType
+	 */
+	public void deleteAssetByNumberOrIfscCodeOrSortCodeOrNameAndType(
+			String assetNumber, String ifscCode, String sortCode,
+			String assetName, String assetType) {
+
+		Query query = new Query(Criteria
+				.where("assetNumber")
+				.is(assetNumber)
+				.orOperator(Criteria.where("ifscCode").is(ifscCode))
+				.orOperator(Criteria.where("sortCode").is(sortCode))
+				.orOperator(
+						Criteria.where("assetName")
+								.is(assetName)
+								.orOperator(
+										Criteria.where("assetType").is(
+												assetType))));
+
+		mongoTemplate.remove(query, InvestmentAsset.class);
 	}
 
 }

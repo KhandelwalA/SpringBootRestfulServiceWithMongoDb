@@ -1,0 +1,150 @@
+{
+	"variables": [],
+	"info": {
+		"name": "AssetService_SpringBoot_MongoDb",
+		"_postman_id": "09eccf7a-8d98-401f-0595-c5c7b235aae3",
+		"description": "These set of services are built using spring boot with MongoDb ",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/personal/addPersonalAsset",
+			"request": {
+				"url": "http://localhost:8080/personal/addPersonalAsset",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Conte",
+						"value": "application/json;charset=UTF-8",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"assetNumber\": \"12345678\",\n    \"assetName\": \"BSLF\",\n    \"assetType\": \"Mutual Fund\",\n    \"assetAddress\":{\n    \t\"physicalAddress\": [\"H.NO 20\", \"Street no 120\", \"Patel Nagar\", \"New Delhi\", \"Delhi\", \"110008\"], \n    \t\"websiteURL\":\"www.bslf.com\"\n    },\n    \"assetContactInformation\":{\n    \t\"contactNumbers\":[\"12\",\"34\",\"56\",\"78\"]\n    },\n    \"assetCredentials\":{\n    \t\"loginId\":\"kk.kk\",\n    \t\"password\":\"sdsd\",\n    \t\"phonePassword\":\"sdsd\"\n    },\n    \"assetSecurityInformation\":[{\"securityQuestions\":\"question1\",\"securityAnswer\":\"weee\"},{\"securityQuestions\":\"question2\",\"securityAnswer\":\"Are\"},{\"securityQuestions\":\"question3\",\"securityAnswer\":\"good\"}],\n    \"miscellaneousInfo\": \"This is miscellaneous Information for sdd\"\n  }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/personal/getAllPersonalAsset",
+			"request": {
+				"url": "http://localhost:8080/personal/getAllPersonalAsset",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/investment/addInvestmentAsset",
+			"request": {
+				"url": "http://localhost:8080/investment/addInvestmentAsset",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n \t\"assetNumber\": \"12345678\",\n    \"assetName\": \"BSLF\",\n    \"assetType\": \"Mutual Fund\",\n    \"ifscCode\":\"8988\",\n    \"sortCode\":\"7878\",\n    \"uidNumber\":\"sd23\",\n    \"dpNumber\":\"6767\",\n    \"repositoryId\":\"678hu\",\n    \"clientId\":\"dfhg67\",\n    \"assetAddress\":{ \n    \t\"addressLine1\":\"AL1\",\n    \t\"addressLine2\":\"AL2\",\n    \t\"addressLine3\":\"AL3\",\n    \t\"addressLine4\":\"AL4\",\n    \t\"addressLine5\":\"AL5\",\n    \t\"websiteURL\":\"www.bslf.com\"\n    },\n    \"assetContactInformation\":{\n    \t\"contactNumber1\":\"265656\",\n    \t\"contactNumber2\":\"3232\",\n    \t\"contactNumber3\":\"23232\"\n    },\n    \"assetCredentials\":{\n    \t\"loginId\":\"kk.kk\",\n    \t\"password\":\"sdsd\",\n    \t\"phonePassword\":\"sdsd\"\n    },\n    \"assetSecurityInformation\":{\n    \t\"securityQuestion1\":\"Question1\",\n    \t\"securityAnswer1\":\"Answer1\",\n    \t\"securityQuestion2\":\"Question2\",\n    \t\"securityAnswer2\":\"Answer2\",\n    \t\"securityQuestion3\":\"Question3\",\n    \t\"securityAnswer3\":\"Answer3\",\n    \t\"securityQuestion4\":\"Question4\",\n    \t\"securityAnswer4\":\"Answer4\",\n    \t\"securityQuestion5\":\"Question5\",\n    \t\"securityAnswer5\":\"Answer5\",\n    \t\"securityQuestion6\":\"Question6\",\n    \t\"securityAnswer6\":\"Answer6\"\n    }\n }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/investment/getAllInvestmentAsset",
+			"request": {
+				"url": "http://localhost:8080/investment/getAllInvestmentAsset",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/investment/getInvestmentAssetByNameAndtype",
+			"request": {
+				"url": "http://localhost:8080/investment/getInvestmentAssetByNameAndtype",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"assetName\": \"BSLF\",\n        \"assetType\": \"Mutual Fund\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/investment/getAssetByNumberOrIfscCodeOrSortCodeOrNameAndType/null/null/null/BSLF/Mutual Fund",
+			"request": {
+				"url": "http://localhost:8080/investment/getInvestmentAssetByNameAndtype",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"assetName\": \"BSLF\",\n        \"assetType\": \"Mutual Fund\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/investment/deleteAssetByNumberOrIfscCodeOrSortCodeOrNameAndType/null/null/null/BSLF/Mutual Fund",
+			"request": {
+				"url": "http://localhost:8080/investment/getInvestmentAssetByNameAndtype",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json;charset=UTF-8",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"assetName\": \"BSLF\",\n        \"assetType\": \"Mutual Fund\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
